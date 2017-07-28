@@ -14,6 +14,7 @@ public class ProcessServiceImpl implements ProcessService {
     @Async("processExecutor")
     @Override
     public void process() {
+        logger.info("Received request to process in ProcessServiceImpl.process()");
         try {
             Thread.sleep(15 * 1000);
             logger.info("Processing complete");

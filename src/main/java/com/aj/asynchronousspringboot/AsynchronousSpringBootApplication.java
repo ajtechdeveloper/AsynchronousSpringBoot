@@ -16,17 +16,13 @@ public class AsynchronousSpringBootApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(AsynchronousSpringBootApplication.class);
 
-    @Value("${pool.size:1}")
-    private int poolSize;;
-
-    @Value("${queue.capacity:0}")
-    private int queueCapacity;
-
     @Bean(name="processExecutor")
     public TaskExecutor workExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setMaxPoolSize(poolSize);
-        threadPoolTaskExecutor.setQueueCapacity(queueCapacity);
+        threadPoolTaskExecutor.setThreadNamePrefix("Async-");
+        threadPoolTaskExecutor.setCorePoolSize(3);
+        threadPoolTaskExecutor.setMaxPoolSize(3);
+        threadPoolTaskExecutor.setQueueCapacity(600);
         threadPoolTaskExecutor.afterPropertiesSet();
         logger.info("ThreadPoolTaskExecutor set");
         return threadPoolTaskExecutor;
